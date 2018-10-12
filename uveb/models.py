@@ -1,4 +1,5 @@
-from urlparse import urlparse
+from urllib.parse import urlparse
+
 
 class ApiObject(object):
     """An abstract class which provides functions for passing to Structure
@@ -13,7 +14,8 @@ class ApiObject(object):
             dict - Serialized dictionary of values
         """
         raise NotImplementedError('Class %s does not implement serialize()' %
-                (self.__class__.__name__))
+                                  (self.__class__.__name__))
+
 
 class CVideo(ApiObject):
     """A object which represents a full, 360 video"""
@@ -57,7 +59,7 @@ class CVideo(ApiObject):
     @property
     def uri(self):
         """A string with the HTTP URL"""
-        return self._uri.geturl()size, 
+        return self._uri.geturl()
 
     @uri.setter
     def uri(self, uri):
@@ -79,7 +81,7 @@ class CVideo(ApiObject):
         return self._path
 
     @path.setter
-    def path(self, path)
+    def path(self, path):
         self._path = path
 
     @property

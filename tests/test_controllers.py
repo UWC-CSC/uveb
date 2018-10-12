@@ -3,6 +3,7 @@ import mysql.connector
 from uveb import controllers
 from uveb import credentials
 
+
 class TestCVideoFetcherConnection(unittest.TestCase):
     def test_init_valid_connection(self):
         self.valid_connection = mysql.connector.connect(
@@ -28,9 +29,10 @@ class TestCVideoFetcherConnection(unittest.TestCase):
         )
 
         self.assertRaises(Exception, controllers.CVideoFetcher.init,
-            self.invalid_connection)
+                          self.invalid_connection)
 
         self.invalid_connection.close()
+
 
 class TestCVideoFetcher(unittest.TestCase):
     def setUp(self):
@@ -44,3 +46,6 @@ class TestCVideoFetcher(unittest.TestCase):
 
     def test_fetch_by_id(self):
         controllers.CVideoFetcher.fetch_by_id(1)
+
+    def tearDown(self):
+        self.valid_connection.close()
