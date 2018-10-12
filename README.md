@@ -96,7 +96,7 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 This project is licensed under the
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) license. Check the
-[LICENSE](LICENSE) file for more information.
+[LICENSE](LICENSE.md) file for more information.
 
 ## Acknowledgments
 
