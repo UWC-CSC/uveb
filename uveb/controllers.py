@@ -2,17 +2,19 @@ import mysql.connector
 from contextlib import closing
 from . import models
 
+conn = None
+def init(connection):
+    global conn
+    conn = connection
 
 class CVideoFetcher(object):
     """Static class for interfacing with the database"""
-    _conn = None
 
-    def init(connection):
-        CVideoFetcher._conn = connection
+    global conn
 
     @staticmethod
     def fetch_by_id(id):
-        with closing(CVideoFetcher._conn.cursor()) as cur:
+        with closing(conn.cursor()) as cur:
             cur.execute("""SELECT id, title, description, resolution_w, \
                     resolution_h, size, uri, path
                     FROM c_videos WHERE id=%s""", (id,))
