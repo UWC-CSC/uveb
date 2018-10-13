@@ -8,6 +8,7 @@ setup(
         'flask',
         'flask-restful',
         'flask-httpauth',
+        'mysql-connector',
         'passlib'
     ],
     version='0.0.1',
