@@ -9,5 +9,9 @@ setup(
         'flask-restful',
         'flask-httpauth',
         'passlib'
-    ]
+    ],
+    version='0.0.1',
+    description='The backend for the VR Experience of UWC CSC',
+    author='Marko Vejnovic',
+    author_email='marko.vejnovic@hotmail.com'
 )
