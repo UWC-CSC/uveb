@@ -20,14 +20,20 @@ class ApiObject(object):
 class CVideo(ApiObject):
     """A object which represents a full, 360 video"""
 
-    def __init__(self, id, title, description, resolution, size, uri, path):
+    def __init__(self, id, title):
         self.id = id
         self.title = title
-        self.description = description
-        self.resolution = resolution
-        self.size = size
-        self.uri = uri
-        self.path = path
+
+    @classmethod
+    def full(CVideo, id, title, description, resolution, size, uri, path):
+        """Overloaded constructor"""
+        cv = CVideo(id, title)
+        cv.description = description
+        cv.resolution = resolution
+        cv.size = size
+        cv.uri = uri
+        cv.path = path
+        return cv
 
     @property
     def id(self):
@@ -94,14 +100,20 @@ class CVideo(ApiObject):
         self._size = size
 
     def serialize(self):
-        return {
-                'id': self.id,
-                'title': self.title,
-                'description': self.description,
-                'resolution': {
-                    'w': self.resolution[0],
-                    'h': self.resolution[1]
-                },
-                'size': self.size,
-                'uri': self.uri
-        }
+        try:
+            return {
+                    'id': self.id,
+                    'title': self.title,
+                    'description': self.description,
+                    'resolution': {
+                        'w': self.resolution[0],
+                        'h': self.resolution[1]
+                    },
+                    'size': self.size,
+                    'uri': self.uri
+            }
+        except AttributeError:
+            return {
+                    'id': self.id,
+                    'title': self.title
+            }

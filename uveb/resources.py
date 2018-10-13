@@ -2,6 +2,15 @@ from flask_restful import Resource, abort
 from . import controllers
 
 
+class CVideosResource(Resource):
+    """Represents multiple CVideo resource"""
+
+    def get(self):
+        return controllers.CVideoFetcher.serialize_all(
+                controllers.CVideoFetcher.fetch_all()
+        )
+
+
 class CVideoResource(Resource):
     """Represents a CVideo Resource"""
 

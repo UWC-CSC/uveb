@@ -13,6 +13,7 @@ class HelloWorld(Resource):
 
 
 api.add_resource(HelloWorld, '/')
+api.add_resource(resources.CVideosResource, '/cvideos')
 api.add_resource(resources.CVideoResource, '/cvideos/<string:id>')
 
 
