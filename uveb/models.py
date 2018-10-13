@@ -59,8 +59,6 @@ class User(ApiObject):
 
     def verify_password(self, password):
         """Checks if the entered password is correct for the user"""
-        print(self.username)
-        print(self.password_hash)
         return pwd_context.verify(password, self.password_hash)
 
 

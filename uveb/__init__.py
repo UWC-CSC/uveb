@@ -8,24 +8,22 @@ app = Flask(__name__)
 api = Api(app)
 auth = HTTPBasicAuth()
 
+
 @auth.verify_password
 def verify_password(username, password):
     try:
         return (controllers.UserFetcher.fetch_by_username(username)
                                        .verify_password(password))
     except controllers.ModelNotFoundException:
-        # TODO: Check if this is the correct response code
         abort(401)
 
 
-class HelloWorld(Resource):
+class ProtectedCVideosResource(resources.ProtectedCVideosResource):
     decorators = [auth.login_required]
-    def get(self):
-        return {'hello': 'World'}
 
 
-api.add_resource(HelloWorld, '/')
 api.add_resource(resources.CVideosResource, '/cvideos')
+api.add_resource(ProtectedCVideosResource, '/cvideos')
 api.add_resource(resources.CVideoResource, '/cvideos/<string:id>')
 
 
