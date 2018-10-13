@@ -1,4 +1,5 @@
 from urllib.parse import urlparse
+from passlib.apps import custom_app_context as pwd_context
 
 
 class ApiObject(object):
@@ -15,6 +16,50 @@ class ApiObject(object):
         """
         raise NotImplementedError('Class %s does not implement serialize()' %
                                   (self.__class__.__name__))
+
+
+class User(ApiObject):
+    """An object representing a user"""
+
+    def __init__(self, id, username, password_hash):
+        self.id = id
+        self.username = username
+        self.password_hash = password_hash
+
+    @property
+    def id(self):
+        """The id of the User"""
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        self._id = id
+
+    @property
+    def username(self):
+        """The username of the User"""
+        return self._username
+
+    @username.setter
+    def username(self, username):
+        self._username = username
+
+    @property
+    def password_hash(self):
+        """The password_hash of the User"""
+        return self._password_hash
+
+    @password_hash.setter
+    def password_hash(self, password_hash):
+        self._password_hash = password_hash
+
+    def hash_password(self, password):
+        """Encrypts a password and stores its hash as an attribute"""
+        self.password_hash = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        """Checks if the entered password is correct for the user"""
+        return pwd_context.verify(password, self.password_hash)
 
 
 class CVideo(ApiObject):

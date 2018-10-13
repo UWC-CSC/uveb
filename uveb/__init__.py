@@ -1,19 +1,29 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, abort
 from . import resources, controllers, credentials
+from flask_httpauth import HTTPBasicAuth
 import mysql.connector
 
 app = Flask(__name__)
 api = Api(app)
+auth = HTTPBasicAuth()
 
 
-class HelloWorld(Resource):
-    def get(self):
-        return {'hello': 'World'}
+@auth.verify_password
+def verify_password(username, password):
+    try:
+        return (controllers.UserFetcher.fetch_by_username(username)
+                                       .verify_password(password))
+    except controllers.ModelNotFoundException:
+        abort(401)
 
 
-api.add_resource(HelloWorld, '/')
+class ProtectedCVideosResource(resources.ProtectedCVideosResource):
+    decorators = [auth.login_required]
+
+
 api.add_resource(resources.CVideosResource, '/cvideos')
+api.add_resource(ProtectedCVideosResource, '/cvideos')
 api.add_resource(resources.CVideoResource, '/cvideos/<string:id>')
 
 

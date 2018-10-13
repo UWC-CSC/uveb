@@ -1,5 +1,5 @@
-from flask_restful import Resource, abort
-from . import controllers
+from flask_restful import Resource, abort, reqparse
+from . import controllers, models
 
 
 class CVideosResource(Resource):
@@ -19,3 +19,32 @@ class CVideoResource(Resource):
             return controllers.CVideoFetcher.fetch_by_id(id).serialize()
         except controllers.ModelNotFoundException:
             abort(404, message="Model not found")
+
+
+class ProtectedCVideosResource(Resource):
+    """Representes a CVideo resource requiring authentication
+
+    Generally used for adding a new CVideo instance to the server. This class
+    should be inherited from so that the auth.login_required decorator can be
+    used.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self._parser = reqparse.RequestParser()
+        self._parser.add_argument('title')
+        self._parser.add_argument('description')
+        self._parser.add_argument('resolution')
+        self._parser.add_argument('size')
+        self._parser.add_argument('uri')
+        self._parser.add_argument('path')
+
+    def post(self):
+        args = self._parser.parse_args()
+        try:
+            controllers.CVideoFetcher.push(models.CVideo.full(
+                -1, args['title'], args['description'],
+                tuple(args['resolution'].split('x')), args['size'],
+                args['uri'], args['path']))
+        except AttributeError as ae:
+            abort(400)
