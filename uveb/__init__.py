@@ -1,13 +1,25 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, abort
 from . import resources, controllers, credentials
+from flask_httpauth import HTTPBasicAuth
 import mysql.connector
 
 app = Flask(__name__)
 api = Api(app)
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(username, password):
+    try:
+        return (controllers.UserFetcher.fetch_by_username(username)
+                                       .verify_password(password))
+    except controllers.ModelNotFoundException:
+        # TODO: Check if this is the correct response code
+        abort(401)
 
 
 class HelloWorld(Resource):
+    decorators = [auth.login_required]
     def get(self):
         return {'hello': 'World'}
 

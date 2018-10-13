@@ -1,4 +1,5 @@
 import mysql.connector
+from passlib.apps import custom_app_context as pwd_context
 from contextlib import closing
 from . import models
 
@@ -12,6 +13,35 @@ def init(connection):
 
 class ModelNotFoundException(Exception):
     pass
+
+
+class UserFetcher(object):
+    """Static class for operations with users"""
+
+    global conn
+
+    @staticmethod
+    def fetch_by_username(username):
+        """Fetches a models.User from the database using the username
+        
+        Arguments:
+            username - The username of the user
+
+        Returns:
+            User - The requested User
+
+        Raises:
+            ModelNotFoundException - if the requested model is not found
+        """
+        with closing(conn.cursor()) as cur:
+            cur.execute("""SELECT id, username, password_hash \
+                    from users WHERE username=%s LIMIT 0, 1""", (username,))
+
+            r = cur.fetchone()
+            if r:
+                return models.User(r[0], r[1], r[2][1:-1])
+            else:
+                raise ModelNotFoundException
 
 
 class CVideoFetcher(object):
