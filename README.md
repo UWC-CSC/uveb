@@ -33,8 +33,7 @@ virtualenv venv
 Install the dependencies:
 
 ```
-pip install flask
-pip install flask-restful
+pip install -r requirements.txt
 pip install pycodestyle
 ```
 
@@ -74,7 +73,70 @@ pycodestyle uveb/*.py tests/*.py
 
 ## Deployment
 
-Development is unprepared.
+Deploying is done as per the [Flask Deployment
+Guide](http://flask.pocoo.org/docs/1.0/tutorial/deploy/). 
+
+First, you need to install `wheel`.
+
+```bash
+pip install wheel
+```
+
+Next, to create a `.whl` file, run:
+
+```bash
+python setup.py bdist_wheel
+```
+
+This will create a deployable `.whl` file in `dist/`.
+
+These are the releases that are hosted on GitHub releases.
+
+### Serving
+
+To finally serve everything, create a folder for the software:
+```bash
+mkdir uveb/
+cd uveb/
+```
+
+Download the latest `.whl` to your server.
+
+Create a new `virtualenv` by running:
+```bash
+virtualenv venv
+. venv/bin/activate
+```
+
+Finally, run `pip install uveb-x.x.x-none-any.whl`, where _x.x.x_ is the
+release version. 
+
+Also, do not forget to `export FLASK_APP=uveb`.
+
+`uveb` is now installed, but you need to setup a database with which it can
+interface.
+
+This is relatively simple, using the available `schema.sql` create a `MySQL`
+database:
+
+Lastly, but probably most importantly, you have to configure `uveb`:
+```bash
+sudo mkdir /etc/uveb
+sudo touch /etc/uveb/uveb.conf
+sudo nano /etc/uveb/uveb.conf
+```
+
+### Configuration
+
+The configuration follows the _Microsoft INI_ format. Currently the only
+section available is `[Database]`.
+
+```conf
+[Database]
+username = yourusername
+password = yourpassword
+```
+
 
 ## Built With
 

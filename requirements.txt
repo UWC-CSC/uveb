@@ -1,0 +1,6 @@
+flask
+flask-restful
+mysql-connector
+passlib
+Flask-HTTPAuth
+configparser

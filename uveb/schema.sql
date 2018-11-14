@@ -6,6 +6,7 @@ CREATE TABLE c_videos (
 
 	title varchar(255) not null,
 	description varchar(1024),
+	thumbnail varchar(2083),
 	resolution_w smallint unsigned,
 	resolution_h smallint unsigned,
 	size int unsigned,

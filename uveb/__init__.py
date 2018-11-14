@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Resource, Api, abort
-from . import resources, controllers, credentials
+from . import resources, controllers
+from .config import Config
 from flask_httpauth import HTTPBasicAuth
 import mysql.connector
 
@@ -29,10 +30,12 @@ api.add_resource(resources.CVideoResource, '/cvideos/<string:id>')
 
 @app.before_first_request
 def initialize():
+    Config.read()
+
     connection = mysql.connector.connect(
             host='localhost',
-            user=credentials.SQL_USERNAME,
-            passwd=credentials.SQL_PASSWORD,
+            user=Config.get_db_username(),
+            passwd=Config.get_db_password(),
             database='uveb'
     )
     controllers.init(connection)
