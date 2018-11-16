@@ -65,9 +65,11 @@ class User(ApiObject):
 class CVideo(ApiObject):
     """A object which represents a full, 360 video"""
 
-    def __init__(self, id, title):
+    def __init__(self, id, title, description, thumbnail_uri):
         self.id = id
         self.title = title
+        self.description = description
+        self.thumbnail_uri = thumbnail_uri
 
     @classmethod
     def full(CVideo, id, title, description, resolution, size, uri, path):
@@ -160,5 +162,7 @@ class CVideo(ApiObject):
         except AttributeError:
             return {
                     'id': self.id,
-                    'title': self.title
+                    'title': self.title,
+                    'description': self.description,
+                    'thumbnail': self.thumbnail_uri
             }

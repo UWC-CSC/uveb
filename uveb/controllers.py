@@ -78,13 +78,13 @@ class CVideoFetcher(object):
             A list of all partial models.CVideo's
         """
         with closing(conn.cursor()) as cur:
-            cur.execute("""SELECT id, title, thumbnail FROM """ +
+            cur.execute("""SELECT id, title, description, thumbnail_uri FROM """ +
                     CVideoFetcher._TABLE)
             rows = cur.fetchall()
 
         cvideos = []
         for r in rows:
-            cvideos.append(models.CVideo(r[0], r[1]))
+            cvideos.append(models.CVideo(r[0], r[1], r[2], r[3]))
 
         return cvideos
 
@@ -103,7 +103,7 @@ class CVideoFetcher(object):
 
         """
         with closing(conn.cursor()) as cur:
-            cur.execute("""SELECT id, title, description, thumbnail,\
+            cur.execute("""SELECT id, title, description, thumbnail_uri,\
                     resolution_w, resolution_h, size, uri, path FROM """ + 
                     CVideoFetcher._TABLE + """ WHERE id=%s LIMIT 0, 1""", (id,))
             rows = cur.fetchone()

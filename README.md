@@ -126,6 +126,16 @@ sudo touch /etc/uveb/uveb.conf
 sudo nano /etc/uveb/uveb.conf
 ```
 
+Your `uveb` should work now, but you haven't installed `mysql` on your server
+just yet. We recommend you use `mariadb`, just because it's more sensible.
+
+Go ahead and install yourself a `mysql` implementation, set it up, etc.
+
+Then, create a user for `uveb`:
+```bash
+
+```
+
 ### Configuration
 
 The configuration follows the _Microsoft INI_ format. Currently the only

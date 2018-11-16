@@ -23,6 +23,7 @@ class ProtectedCVideosResource(resources.ProtectedCVideosResource):
     decorators = [auth.login_required]
 
 
+api.add_resource(resources.IndexResource, '/')
 api.add_resource(resources.CVideosResource, '/cvideos')
 api.add_resource(ProtectedCVideosResource, '/cvideos')
 api.add_resource(resources.CVideoResource, '/cvideos/<string:id>')
