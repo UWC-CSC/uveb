@@ -47,3 +47,6 @@ tags
 [._]*.un~
 
 credentials.py
+
+# Docs
+docs/build/
