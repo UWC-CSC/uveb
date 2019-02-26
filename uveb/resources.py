@@ -2,6 +2,7 @@ from flask_restful import Resource, abort, reqparse
 from . import controllers, models
 from .config import Config
 
+
 class IndexResource(Resource):
     """Represents the index resource"""
 
@@ -10,6 +11,7 @@ class IndexResource(Resource):
                 "version": Config.get_version(),
                 "static": Config.get_static_server()
         }
+
 
 class CVideosResource(Resource):
     """Represents multiple CVideo resource"""
