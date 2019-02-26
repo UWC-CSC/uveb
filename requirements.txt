@@ -4,3 +4,5 @@ mysql-connector
 passlib
 Flask-HTTPAuth
 configparser
+sphinx
+sphinxjp.themes.basicstrap
