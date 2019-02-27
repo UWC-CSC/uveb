@@ -1,0 +1,275 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>uveb.models &#8212; Uveb  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for uveb.models</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains the models for Uveb&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span>
+<span class="kn">from</span> <span class="nn">passlib.apps</span> <span class="k">import</span> <span class="n">custom_app_context</span> <span class="k">as</span> <span class="n">pwd_context</span>
+
+
+<div class="viewcode-block" id="ApiObject"><a class="viewcode-back" href="../../code/models.html#uveb.models.ApiObject">[docs]</a><span class="k">class</span> <span class="nc">ApiObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract class which provides functions for passing to Structure</span>
+<span class="sd">    classes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ApiObject.serialize"><a class="viewcode-back" href="../../code/models.html#uveb.models.ApiObject.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Should return a python dictionary resembling the structure of a JSON</span>
+<span class="sd">        serialized object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict - Serialized dictionary of values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Class </span><span class="si">%s</span><span class="s1"> does not implement serialize()&#39;</span> <span class="o">%</span>
+                                  <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../code/models.html#uveb.models.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">ApiObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An object representing a user&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password_hash</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password_hash</span> <span class="o">=</span> <span class="n">password_hash</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The id of the User&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+    <span class="nd">@id</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The username of the User&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_username</span>
+
+    <span class="nd">@username</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">username</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">password_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The password_hash of the User&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password_hash</span>
+
+    <span class="nd">@password_hash</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">password_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password_hash</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_password_hash</span> <span class="o">=</span> <span class="n">password_hash</span>
+
+<div class="viewcode-block" id="User.hash_password"><a class="viewcode-back" href="../../code/models.html#uveb.models.User.hash_password">[docs]</a>    <span class="k">def</span> <span class="nf">hash_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Encrypts a password and stores its hash as an attribute&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password_hash</span> <span class="o">=</span> <span class="n">pwd_context</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">password</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="User.verify_password"><a class="viewcode-back" href="../../code/models.html#uveb.models.User.verify_password">[docs]</a>    <span class="k">def</span> <span class="nf">verify_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the entered password is correct for the user&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pwd_context</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password_hash</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CVideo"><a class="viewcode-back" href="../../code/models.html#uveb.models.CVideo">[docs]</a><span class="k">class</span> <span class="nc">CVideo</span><span class="p">(</span><span class="n">ApiObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A object which represents a full, 360 video&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">thumbnail_uri</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_uri</span> <span class="o">=</span> <span class="n">thumbnail_uri</span>
+
+<div class="viewcode-block" id="CVideo.full"><a class="viewcode-back" href="../../code/models.html#uveb.models.CVideo.full">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">full</span><span class="p">(</span><span class="n">CVideo</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">thumbnail_uri</span><span class="p">,</span>
+             <span class="n">resolution</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overloaded constructor&quot;&quot;&quot;</span>
+        <span class="n">cv</span> <span class="o">=</span> <span class="n">CVideo</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">thumbnail_uri</span><span class="p">)</span>
+        <span class="n">cv</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="n">resolution</span>
+        <span class="n">cv</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="n">cv</span><span class="o">.</span><span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="k">return</span> <span class="n">cv</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The id of the video&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+    <span class="nd">@id</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The title of the video&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title</span>
+
+    <span class="nd">@title</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_title</span> <span class="o">=</span> <span class="n">title</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The description of the video&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span>
+
+    <span class="nd">@description</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="n">description</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A string with the HTTP URL&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
+
+    <span class="nd">@uri</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A tuple containing the resolution of the video&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_res_w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_res_h</span><span class="p">)</span>
+
+    <span class="nd">@resolution</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resolution</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_res_w</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_res_h</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The local URI of the video&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span>
+
+    <span class="nd">@path</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The size of the file&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+
+    <span class="nd">@size</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
+
+<div class="viewcode-block" id="CVideo.serialize"><a class="viewcode-back" href="../../code/models.html#uveb.models.CVideo.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+                    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                    <span class="s1">&#39;resolution&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="p">},</span>
+                    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                    <span class="s1">&#39;uri&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">uri</span>
+            <span class="p">}</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+                    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                    <span class="s1">&#39;thumbnail&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_uri</span>
+            <span class="p">}</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Uveb</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/index.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/index.html">Code Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Marko Vejnovic.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

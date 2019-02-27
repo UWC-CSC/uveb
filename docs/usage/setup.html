@@ -1,0 +1,235 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Setup &#8212; Uveb  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Uveb Configuration" href="config.html" />
+    <link rel="prev" title="API" href="api.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<p>Setting up Uveb is done in 8 steps. Currently, Uveb is not ready for a stable release. Please keep in mind the security issues.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>Uveb requires the following prerequisites:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="22%" />
+<col width="23%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Ubuntu <em>Untested</em></th>
+<th class="head">Arch</th>
+<th class="head">CentOS <em>Untested</em></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="code docutils literal notranslate"><span class="pre">python3</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">python</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">centos-release-scl</span> <span class="pre">&amp;&amp;</span> <span class="pre">yum</span> <span class="pre">install</span> <span class="pre">rh-python36</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="code docutils literal notranslate"><span class="pre">pip</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3-pip</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">python-pip</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">python36-setuptools</span> <span class="pre">&amp;&amp;</span> <span class="pre">easy_install-3.6</span> <span class="pre">pip</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="code docutils literal notranslate"><span class="pre">virtualenv</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">virtualenv</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">python-virtualenv</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">virtualenv</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="code docutils literal notranslate"><span class="pre">mariadb</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">mariadb-server</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">mariadb</span></code></td>
+<td><code class="code docutils literal notranslate"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">mariadb-server</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="clone">
+<h2>Clone<a class="headerlink" href="#clone" title="Permalink to this headline">¶</a></h2>
+<p>Clone Uveb through <code class="code docutils literal notranslate"><span class="pre">git</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/UWC-CSC/uveb.git <span class="o">&amp;&amp;</span> <span class="nb">cd</span> uveb
+</pre></div>
+</div>
+</div>
+<div class="section" id="virtualenv">
+<h2>Virtualenv<a class="headerlink" href="#virtualenv" title="Permalink to this headline">¶</a></h2>
+<p>I recommend installing a <code class="code docutils literal notranslate"><span class="pre">virtualenv</span></code>, however if you do not wish to use
+<code class="code docutils literal notranslate"><span class="pre">virtualenv</span></code> you are free to skip this step altogether, however incorrect
+setup may occur.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>virtualenv venv
+. venv/bin/activate
+</pre></div>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Install the required modules. Please read what <code class="code docutils literal notranslate"><span class="pre">requirements.txt</span></code> entails
+before you run the following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="mysql">
+<h2>MySQL<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<p>Start the MySQL server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl start mysqld
+</pre></div>
+</div>
+<p>Optionally, you may choose to enable the MySQL server on startup:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> mysqld
+</pre></div>
+</div>
+</div>
+<div class="section" id="database-setup">
+<h2>Database Setup<a class="headerlink" href="#database-setup" title="Permalink to this headline">¶</a></h2>
+<p>The database you installed is empy and you must set it up before proceeding.</p>
+<p>Login as the root user:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql -u root -p
+</pre></div>
+</div>
+<p>Create the <code class="code docutils literal notranslate"><span class="pre">uveb</span></code> database which will contain all of the data of the
+application:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">uveb</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Create the user which will use the database:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;uveb_username&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;secure_password&#39;</span><span class="p">;</span>
+<span class="n">FLUSH</span> <span class="k">PRIVILEGES</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Dump all of the tables from the provided <code class="code docutils literal notranslate"><span class="pre">schema.sql</span></code> (read it before you
+execute the command!):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql -u uveb_username --password<span class="o">=</span>secure_password uveb &lt; uveb/schema.sql
+</pre></div>
+</div>
+</div>
+<div class="section" id="uveb-config">
+<h2>Uveb Config<a class="headerlink" href="#uveb-config" title="Permalink to this headline">¶</a></h2>
+<p>Uveb itself is relatively easy to configure. Please check the <a class="reference internal" href="config.html#uveb-conf"><span class="std std-ref">configuration
+manual</span></a> for more information. Uveb <em>must</em> be manually configured.</p>
+</div>
+<div class="section" id="run">
+<h2>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h2>
+<p>Now that everything is configured, you may run the application.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">FLASK_APP</span><span class="o">=</span>uveb
+<span class="nb">export</span> <span class="nv">FLASK_ENV</span><span class="o">=</span>development
+flask run --host<span class="o">=</span><span class="m">0</span>.0.0.0
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Uveb</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">Uveb Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code/index.html">Code Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Usage</a><ul>
+      <li>Previous: <a href="api.html" title="previous chapter">API</a></li>
+      <li>Next: <a href="config.html" title="next chapter">Uveb Configuration</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Marko Vejnovic.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/usage/setup.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
