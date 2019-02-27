@@ -14,5 +14,5 @@ setup(
     version='0.0.1',
     description='The backend for the VR Experience of UWC CSC',
     author='Marko Vejnovic',
-    author_email='marko.vejnovic@hotmail.com'
+    author_email='marko.vejnovic@hotmail.com',
 )
