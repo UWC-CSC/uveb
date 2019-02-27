@@ -105,14 +105,13 @@ class CVideoFetcher(object):
         """
         with closing(conn.cursor()) as cur:
             cur.execute("""SELECT id, title, description, thumbnail_uri,\
-                        resolution_w, resolution_h, size, uri, path FROM """ +
+                        resolution_w, resolution_h, uri, size, path FROM """ +
                         CVideoFetcher._TABLE + """ WHERE id=%s LIMIT 0, 1""",
                         (id,))
-            rows = cur.fetchone()
+            r = cur.fetchone()
 
-        if rows:
-            r = rows
-            return models.CVideo.full(r[0], r[1], r[2], (r[3], r[4]), r[5],
+        if r:
+            return models.CVideo.full(r[0], r[1], r[2], r[3], [r[4], r[5]],
                                       r[6], r[7])
         else:
             raise ModelNotFoundException

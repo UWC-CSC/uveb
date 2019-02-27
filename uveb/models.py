@@ -72,14 +72,13 @@ class CVideo(ApiObject):
         self.thumbnail_uri = thumbnail_uri
 
     @classmethod
-    def full(CVideo, id, title, description, resolution, size, uri, path):
+    def full(CVideo, id, title, description, thumbnail_uri,
+             resolution, uri, size):
         """Overloaded constructor"""
-        cv = CVideo(id, title)
-        cv.description = description
+        cv = CVideo(id, title, description, thumbnail_uri)
         cv.resolution = resolution
         cv.size = size
         cv.uri = uri
-        cv.path = path
         return cv
 
     @property
