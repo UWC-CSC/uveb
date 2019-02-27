@@ -1,3 +1,5 @@
+"""This module contains the models for Uveb"""
+
 from urllib.parse import urlparse
 from passlib.apps import custom_app_context as pwd_context
 

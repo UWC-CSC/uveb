@@ -104,3 +104,55 @@ returns
 
 	]
 
+``/cvideos/{id}``
+-----------------
+
+Handles the detailed information of a ``cvideo``.
+
+Arguments:
+* ``{id}`` - the id of the ``cvideo``
+
+``GET``
+~~~~~~~
+
+Returns a JSON object containing the detailed information of the ``cvideo``.
+
+::
+
+	{
+		"id": cvideoId,
+		"title": "cvideoTitle",
+		"description": "cvideoDescription",
+		"resolution": {
+			"w": cvideoWidth,
+			"h": cvideoHeight
+		},
+		"size": cvideoSize,
+		"uri": "cvideoUri"
+	}
+
+where
+
+* ``cvideoId`` - the id of the video
+* ``cvideoTitle`` - the title of the video
+* ``cvideoDescription`` - the video description
+* ``cvideoWidth`` - the width of the video
+* ``cvideoHeight`` - the height of the video
+* ``cvideoSize`` - the size of the video in bytes
+* ``cvideoUri`` - the uri where the cvideo is accessible at
+
+*Example*:
+
+::
+
+	{
+		"id": 1,
+		"title": "Rollercoaster Endeavor",
+		"description": "The rollercoaster adventures of Jim",
+		"resolution": {
+			"w": 800,
+			"h": 600
+		},
+		"size": 5652749,
+		"uri": "http://freevideohosting.fake/jimmy.mp4"
+	}

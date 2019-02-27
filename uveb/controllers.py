@@ -1,3 +1,5 @@
+"""The controller segments of Uveb"""
+
 import mysql.connector
 from passlib.apps import custom_app_context as pwd_context
 from contextlib import closing

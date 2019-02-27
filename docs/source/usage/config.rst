@@ -1,4 +1,4 @@
-.. _uveb_conf:
+.. _uveb-conf:
 
 Uveb Configuration
 ==================

@@ -11,7 +11,7 @@ Requirements
 Uveb requires the following prerequisites:
 
 +--------------------+----------------------------------+-------------------------------------+-------------------------------------------------------------------+
-| Name *Untested*    | Ubuntu *Untested*                | Arch                                | CentOS *Untested*                                                 |
+| Name               | Ubuntu *Untested*                | Arch                                | CentOS *Untested*                                                 |
 +====================+==================================+=====================================+===================================================================+
 | :code:`python3`    | :code:`apt install python3`      | :code:`pacman -S python`            | :code:`yum install centos-release-scl && yum install rh-python36` |
 +--------------------+----------------------------------+-------------------------------------+-------------------------------------------------------------------+
@@ -108,7 +108,7 @@ Uveb Config
 -----------
 
 Uveb itself is relatively easy to configure. Please check the :ref:`configuration
-manual` for more information. Uveb *must* be manually configured.
+manual <uveb-conf>` for more information. Uveb *must* be manually configured.
 
 Run
 ----
