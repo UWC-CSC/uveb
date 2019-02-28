@@ -36,6 +36,14 @@ The available keys are:
 * *username* - a string of the *database* username
 * *password* - a string of the *database* password
 
+Static
+~~~~~~
+
+This section configures the static webserver
+
+The available keys are:
+* *location* - the location of the static webserver
+
 Example
 -------
 

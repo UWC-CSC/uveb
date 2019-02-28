@@ -21,7 +21,5 @@ clean:
 
 clean-all:
 	make clean
-	rm -r *.tar.gz
+	rm -rf *.tar.gz
 
-docs:
-	make -C docs/Makefile

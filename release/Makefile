@@ -3,7 +3,7 @@ CONFIG_LOCATION="/etc/uveb/uveb.conf"
 run:
 	( \
 		source venv/bin/activate; \
-		uwsgi --http 127.0.0.1:5000 --module uveb:app; \
+		uwsgi --http 127.0.0.1:8832 --module uveb:app; \
 	)
 
 install:

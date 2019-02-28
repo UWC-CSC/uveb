@@ -76,21 +76,57 @@ pycodestyle uveb/*.py tests/*.py
 Deploying is done as per the [Flask Deployment
 Guide](http://flask.pocoo.org/docs/1.0/tutorial/deploy/). 
 
-First, you need to install `wheel`.
-
-```bash
-pip install wheel
+Deploying is done using the `Makefile`. To package `Uveb`, run
 ```
-
-Next, to create a `.whl` file, run:
-
-```bash
-python setup.py bdist_wheel
+make package
 ```
+*two* times.
 
-This will create a deployable `.whl` file in `dist/`.
+This produces a `.tar.gz` file which is hosted under releases on GitHub.
 
 These are the releases that are hosted on GitHub releases.
+
+To install the given release, download it and extract it:
+```
+tar -xzf uveb-*.tar.gz
+cd uveb-*/
+```
+
+Install `Uveb` by running (*NOT* sudo):
+```
+make install
+```
+
+Now you can run `Uveb` by executing:
+```
+make run
+```
+
+This creates a localhost webserver at `127.0.0.1:8832`.
+
+To deploy this, please connect it to `nginx` with a configuration similar to
+this one:
+
+```
+server {
+    listen 80;
+
+    server_name _;
+
+    access_log  /var/log/nginx/access.log;
+    error_log  /var/log/nginx/error.log;
+
+    location / {
+        proxy_pass         http://127.0.0.1:8832/;
+        proxy_redirect     off;
+
+        proxy_set_header   Host                 $host;
+        proxy_set_header   X-Real-IP            $remote_addr;
+        proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto    $scheme;
+    }
+}
+```
 
 ### Serving
 
