@@ -16,8 +16,9 @@ class Config:
         Config._db_username = Config.config_parser.get('Database', 'username')
         Config._db_password = Config.config_parser.get('Database', 'password')
 
-        if 'FLASK_ENV' in os.environ and \
-            os.environ['FLASK_ENV'] is 'development':
+        if \
+           'FLASK_ENV' in os.environ and \
+           os.environ['FLASK_ENV'] is 'development':
             Config._version = 'DEV'
         else:
             Config._version = pkg_resources.require('uveb')[0].version
