@@ -9,7 +9,8 @@ setup(
         'flask-restful',
         'flask-httpauth',
         'mysql-connector',
-        'passlib'
+        'passlib',
+        'uwsgi'
     ],
     version='0.0.1',
     description='The backend for the VR Experience of UWC CSC',
