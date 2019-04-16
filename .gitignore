@@ -50,3 +50,6 @@ credentials.py
 
 # Docs
 docs/build/
+
+# Wheels
+*.whl.tar.gz
